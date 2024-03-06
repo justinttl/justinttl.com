@@ -4,8 +4,7 @@ import "../styles/global.css";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 
-const { title = "Justin's Blog", description = "Default description" } =
-  Astro.props;
+const { title } = Astro.props;
 ---
 
 <html lang="en">
@@ -14,8 +13,7 @@ const { title = "Justin's Blog", description = "Default description" } =
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
-    <meta name="decription" content={description} />
+    <title>{`Justin | ${title}`}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -28,5 +26,6 @@ const { title = "Justin's Blog", description = "Default description" } =
     <slot />
   </body>
   <Footer />
+
 
 </html>

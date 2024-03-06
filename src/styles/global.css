@@ -53,7 +53,6 @@ body {
   .hamburger {
     display: none;
   }
-
 }
 
 * {
@@ -71,4 +70,15 @@ body {
   height: 5px;
   margin-bottom: 10px;
   background-color: #ff9776;
+}
+
+/* Tags */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tag {
+  margin: 0.25em;
+  padding: 0.5em 1em 0.5em 0em;
 }

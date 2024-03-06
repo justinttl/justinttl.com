@@ -2,7 +2,7 @@
 import "../styles/global.css";
 
 import Footer from "../components/Footer.astro";
-import NavBar from "../components/NavBar.astro";
+import Header from "../components/Header.astro";
 
 const { title = "Justin's Blog", description = "Default description" } =
   Astro.props;
@@ -23,7 +23,7 @@ const { title = "Justin's Blog", description = "Default description" } =
       rel="stylesheet"
     />
   </head>
-  <NavBar />
+  <Header />
   <body>
     <slot />
   </body>

@@ -12,6 +12,7 @@
   "dependencies": {
     "@astrojs/tailwind": "^5.1.0",
     "astro": "^4.3.5",
+    "astro-font": "^0.0.77",
     "astro-icon": "^1.1.0",
     "postcss": "^8.4.35",
     "postcss-preset-env": "^9.3.0",

@@ -3,6 +3,7 @@ import "../styles/global.css";
 
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
+import { AstroFont } from "astro-font";
 
 const { title } = Astro.props;
 ---
@@ -11,6 +12,34 @@ const { title } = Astro.props;
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <AstroFont
+      config={[
+        {
+          name: "Open Sans",
+          src: [
+            {
+              style: "normal",
+              weight: "300",
+              path: "/fonts/OpenSans-Light.woff2",
+            },
+            {
+              style: "normal",
+              weight: "400",
+              path: "/fonts/OpenSans-Regular.woff2",
+            },
+            {
+              style: "normal",
+              weight: "700",
+              path: "/fonts/OpenSans-Bold.woff2",
+            },
+          ],
+          preload: true,
+          display: "swap",
+          selector: "body",
+          fallback: "sans-serif",
+        },
+      ]}
+    />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>{`Justin | ${title}`}</title>

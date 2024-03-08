@@ -1,10 +1,19 @@
+@font-face {
+  font-family: "Open Sans";
+  src: url("/fonts/OpenSans-300-Normal.woff2") format("woff2");
+  font-weight: 300; font-style: normal;
+}
+
 html * {
-  font-family: "Roboto", sans-serif;
+  background-color: hsl(0, 0%, 98%);
+  font-family: "Open Sans";
 }
 
 h1 {
+  color: rgba(185, 20, 20, 0.9);
   margin: 1rem 0;
-  font-size: 2.5rem;
+  font-size: 2rem;
+  font-weight: 300;
 }
 
 body {
@@ -13,6 +22,12 @@ body {
   max-width: 80ch;
   padding: 1rem;
   line-height: 1.5;
+}
+
+.site-title {
+    font-size: 1.75rem;
+    font-weight: 400;
+    color: rgba(0, 0, 0, .6);
 }
 
 /* Nav and Hamburger */
@@ -24,12 +39,12 @@ body {
 }
 
 .navbar a {
+  color: rgba(185, 20, 20, 0.9);
   display: block;
   text-align: center;
   padding: 10px 0;
   text-decoration: none;
   font-size: 1.2rem;
-  font-weight: bold;
   text-transform: uppercase;
 }
 
@@ -37,7 +52,7 @@ body {
   display: unset;
 }
 
-@media screen and (min-width: 636px) {
+@media screen and (min-width: 0) {
   .navbar {
     display: block;
     position: static;
@@ -47,7 +62,7 @@ body {
 
   .navbar a {
     display: inline-block;
-    padding: 15px 20px 15px 0px;
+    padding: 5px 20px 15px 0px;
   }
 
   .hamburger {

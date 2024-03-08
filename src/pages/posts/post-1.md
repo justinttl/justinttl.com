@@ -1,14 +1,15 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: 'My First Blog Post'
+title: "My First Blog Post"
 pubDate: 2022-07-01
-description: 'This is the first post of my new Astro blog.'
-author: 'Justin Lee'
+description: "This is the first post of my new Astro blog."
+author: "Justin Lee"
 image:
-    url: 'https://docs.astro.build/assets/full-logo-light.png'
-    alt: 'The full Astro logo.'
+  url: "https://docs.astro.build/assets/full-logo-light.png"
+  alt: "The full Astro logo."
 tags: ["Introduction"]
 ---
+
 Welcome to my _new blog_ about learning Astro! Here, I will share my learning journey as I build a new website.
 
 ## What I've accomplished

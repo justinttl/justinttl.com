@@ -1,6 +1,18 @@
+* {
+  box-sizing: border-box;
+}
+
 html * {
   background-color: hsl(0, 0%, 98%);
   font-family: "Open Sans";
+}
+
+body {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 80ch;
+  padding: 1rem;
+  line-height: 1.5rem;
 }
 
 h1 {
@@ -10,84 +22,16 @@ h1 {
   font-weight: 300;
 }
 
-body {
-  margin: 0 auto;
-  width: 100%;
-  max-width: 80ch;
-  padding: 1rem;
-  line-height: 1.5;
-}
-
-.site-title {
-  font-size: 1.75rem;
-  font-weight: 400;
-  color: rgba(0, 0, 0, 0.6);
-}
-
-/* Nav and Hamburger */
-.navbar {
-  width: 100%;
-  top: 5rem;
-  display: none;
-  margin: 0;
-}
-
-.navbar a {
+h2 {
   color: rgba(185, 20, 20, 0.9);
-  display: block;
-  text-align: center;
-  padding: 10px 0;
-  text-decoration: none;
-  font-size: 1.2rem;
-  text-transform: uppercase;
+  margin: 1rem 0;
+  font-size: 1.7rem;
+  font-weight: 300;
 }
 
-.expanded {
-  display: unset;
-}
-
-@media screen and (min-width: 0) {
-  .navbar {
-    display: block;
-    position: static;
-    width: auto;
-    background: none;
-  }
-
-  .navbar a {
-    display: inline-block;
-    padding: 5px 20px 15px 0px;
-  }
-
-  .hamburger {
-    display: none;
-  }
-}
-
-* {
-  box-sizing: border-box;
-}
-
-.hamburger {
-  padding-right: 20px;
-  cursor: pointer;
-}
-
-.hamburger .line {
-  display: block;
-  width: 40px;
-  height: 5px;
-  margin-bottom: 10px;
-  background-color: #ff9776;
-}
-
-/* Tags */
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.tag {
-  margin: 0.25em;
-  padding: 0.5em 1em 0.5em 0em;
+h3 {
+  color: rgba(185, 20, 20, 0.9);
+  margin: 1rem 0;
+  font-size: 1.3rem;
+  font-weight: 300;
 }

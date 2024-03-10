@@ -1,0 +1,29 @@
+---
+import { Image } from "astro:assets";
+
+import type { CollectionEntry } from "astro:content";
+import BaseLayout from "./BaseLayout.astro";
+
+const frontmatter = Astro.props.frontmatter as CollectionEntry<"posts">["data"];
+---
+
+<BaseLayout title={frontmatter.title}>
+  <p class="text-lg text-gray-600">
+    {frontmatter.pubDate.toDateString()}
+  </p>
+  <h1>{frontmatter.title}</h1>
+  {
+    frontmatter.cover && (
+      <div>
+        <Image
+          src={frontmatter.cover.image}
+          alt={frontmatter.cover.alt}
+          width="1080"
+          format="avif"
+          class="h-[25vh] max-h-[300px] object-cover object-left-bottom p-1"
+        />
+      </div>
+    )
+  }
+  <slot />
+</BaseLayout>

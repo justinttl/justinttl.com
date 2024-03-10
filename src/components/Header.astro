@@ -1,12 +1,16 @@
 ---
-import Hamburger from "./Hamburger.astro";
 import NavBar from "./NavBar.astro";
+import { Icon } from "astro-icon/components";
 ---
 
-<header>
-  <div>
-    <span class="site-title">justinttl</span>
-    <!-- <Hamburger /> -->
-    <NavBar />
+<header class="mb-10">
+  <div class="flex gap-5">
+    <Icon name="wrench" class="float-left h-16 w-16" />
+    <div class="flex flex-col">
+      <span class="mb-2 block text-3xl font-normal text-gray-600"
+        >justinttl</span
+      >
+      <NavBar />
+    </div>
   </div>
 </header>

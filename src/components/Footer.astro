@@ -2,9 +2,13 @@
 import Social from "./Social.astro";
 ---
 
-<footer>
+<footer class="mt-10">
   <small>
-    Copyright &copy; <span id="copyright"></span> | All rights reserved
+    Copyright &copy Justin Lee <span id="copyright"></span>. Code samples in the
+    blog are licensed under <a
+      class="underline"
+      href="https://choosealicense.com/licenses/mit/">MIT</a
+    >.
   </small>
 </footer>
 
@@ -15,9 +19,3 @@ import Social from "./Social.astro";
   }
   cr.textContent = new Date().getFullYear().toString();
 </script>
-
-<style>
-  footer {
-    margin-top: 2rem;
-  }
-</style>

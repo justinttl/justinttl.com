@@ -7,23 +7,22 @@ const tags = [...new Set(allPosts.map((post) => post.data.tags).flat())];
 ---
 
 <BaseLayout title="Blog">
-  <h2>Tags</h2>
-  <div>
-    {
-      tags.map((tag) => (
-        <p>
-          <a href={`/tags/${tag}`}>{tag}</a>
-        </p>
-      ))
-    }
-  </div>
-
-  <h2>Posts</h2>
   {
     allPosts.map((post) => (
-      <p>
-        <a href={`/posts/${post.slug}`}>{post.data.title}</a>
-      </p>
+      <div class="mb-8">
+        <div class="text-cGray mb-1 text-lg">
+          {post.data.pubDate.toDateString().slice(4)}
+        </div>
+        <div class="mb-2">
+          <a
+            class="text-cMaroon text-3xl font-light decoration-dotted hover:underline"
+            href={`/posts/${post.slug}`}
+          >
+            {post.data.title}
+          </a>
+        </div>
+        <div class="text-cGray italic">{post.data.description}</div>
+      </div>
     ))
   }
 </BaseLayout>

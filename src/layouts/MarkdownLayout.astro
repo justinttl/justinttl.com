@@ -9,7 +9,7 @@ const frontmatter = Astro.props.frontmatter as CollectionEntry<"posts">["data"];
 
 <BaseLayout title={frontmatter.title}>
   <p class="text-lg text-gray-600">
-    {frontmatter.pubDate.toDateString()}
+    {frontmatter.pubDate.toDateString().slice(4)}
   </p>
   <h1>{frontmatter.title}</h1>
   {
@@ -18,7 +18,7 @@ const frontmatter = Astro.props.frontmatter as CollectionEntry<"posts">["data"];
         <Image
           src={frontmatter.cover.image}
           alt={frontmatter.cover.alt}
-          width="1080"
+          width="600"
           format="avif"
           class="h-[25vh] max-h-[300px] object-cover object-left-bottom p-1"
         />

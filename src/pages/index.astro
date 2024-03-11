@@ -1,8 +1,46 @@
 ---
+import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import selfie from "../assets/selfie.jpg";
 ---
 
 <BaseLayout title="Home">
   <h1>Welcome!</h1>
-  <p>This is where I write.</p>
+  <Image
+    src={selfie}
+    alt="A photo of Justin"
+    width="205"
+    format="avif"
+    quality={"high"}
+    class="mb-2 pt-1 sm:float-left sm:mr-5"
+  />
+  <p class="mb-4">
+    I am Justin Lee, a software engineer and lifelong learner. I love designing
+    simple solutions to complex problems and collaborating with others to
+    achieve amazing things.
+  </p>
+
+  <p class="mb-4">
+    I have worked in various startups doing web backend, data science and
+    machine learning. I am pursuing my M.S. in Computer Science at Georgia Tech,
+    specializing in high performance computing and distributed systems.
+  </p>
+
+  <p>
+    You can find me on
+    <a
+      href="https://github.com/justinttl"
+      class="text-cMaroon decoration-dotted underline-offset-2 hover:underline"
+      >github</a
+    >
+    or send me an
+    <a
+      href="mailto:justintt.lee@gmail.com"
+      class="text-cMaroon
+      decoration-dotted
+      underline-offset-2
+      hover:underline"
+      >email</a
+    >.
+  </p>
 </BaseLayout>

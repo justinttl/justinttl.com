@@ -1,0 +1,72 @@
+---
+name: "barriers"
+description: "Implementation of different scalable barrier algorithms which synchronize execution between multiple thread and machines. Written in C using OpenMP and MPI."
+thumbnail:
+  image: "../../assets/covers/barriers-cover.png"
+  alt: "gRPC logo"
+---
+
+import { Image } from "astro:assets";
+
+import treeImg from "../../assets/images/barriers/tree.png";
+import tree2Img from "../../assets/images/barriers/tree-2.png";
+
+## Overview
+
+Coordinating the execution of multiple threads often requires efficient implementation of synchronization primitives provided by the Operating System.
+
+As an operating system and library designer, how can we implement some of these primitives to scale efficiently on many threads?
+
+How can we minimize latency and contention?
+
+Can efficient synchronization be done not just across threads, but also multiple machines?
+
+These are the questions I tried to answer in a project I completed in [Advanced Operating Systems](https://omscs.gatech.edu/cs-6210-advanced-operating-systems) at Georgia Tech where I implemented and compared various barrier algorithms discussed in the seminal paper,
+
+> Mellor-Crummey, J. M., & Scott, M. L. (1991). _Algorithms for Scalable Synchronization on Shared-Memory Multiprocessor_. Computer Systems.
+> https://dl.acm.org/doi/10.1145/103727.103729
+
+## What are barriers?
+
+A barrier is a synchronization primitive where all threads must enter the barrier before any thread can exit and continue executing.
+
+Barriers are important in programs that need to synchronize stages of computation among threads.
+For example, if multiple threads are parallelizing a discrete time simulation, you might want to ensure the state of the world in the previous time step is fully computed before you simulate the current time step.
+
+## Counting Barrier
+
+Counting barrier is a simple implementation that relies on multiple threads busy spinning on a shared memory location.
+Busy spinning refers to a hot loop that continuously check on a condition in an infinite while loop.
+The last thread to enter a barrier signals to all other threads by changing the shared memory.
+
+**Advantages**: Simple, fewest assembly instructions.
+
+**Disadvantages**: In cache coherent CPUs, each thread will cache the shared memory location it is spinning on in its L1 cache.
+A [thundering herd](https://en.wikipedia.org/wiki/Thundering_herd_problem) then occurs when the shared location is changed and all threads invalidate their cache row and refetch the updated value from the core who cache line is in the modified state.
+The amount of concurrent bus traffic scales as number of threads increase. This has the potential to stall the CPU and reduces the overall efficiency of the barrier.
+
+## MCS Tree Barrier
+
+<Image
+  src={treeImg}
+  alt="Tree based barriers"
+  width="500"
+  class="m-auto mb-4 mt-4"
+/>
+
+<Image
+  src={tree2Img}
+  alt="Tree based barriers"
+  width="500"
+  class="m-auto mb-4 mt-4"
+/>
+
+MCS proposes a solution that alleviates memory contention by distributing the spin variable in a tree based structure.
+
+The tree structure is represented as an array of interconnected nodes. Quite uniquely, the structure encodes both a 4-ary arrival tree and a binary wake up tree all in a single array of node structs.
+
+When threads arrive at the barrier, they signal their arrival to the parent in the arrival tree and waits until the its parent in the wake up tree signals to continue execution.
+
+**Advantages**: Avoids single spin location for all threads.
+
+**Disadvantages**: Code is more complex.

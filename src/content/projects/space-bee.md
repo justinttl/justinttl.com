@@ -1,6 +1,6 @@
 ---
 name: "Space Bees"
-description: "A video game where you fight off bees in space. It was a ton of fun learning to build a game from scratch using Unity and Blender."
+description: "A video game where you fight off bees in space. It was a ton of fun learning how to build a game from scratch using Unity and Blender."
 thumbnail:
   image: "../../assets/covers/space-bees-cover.png"
   alt: "Screenshot from a video game"

@@ -48,6 +48,20 @@ const { title } = Astro.props;
           selector: "body",
           fallback: "sans-serif",
         },
+        {
+          name: "MesloLGS NF",
+          src: [
+            {
+              style: "monospace",
+              weight: "400",
+              path: "/fonts/MesloLGS-NF-Regular.ttf",
+            },
+          ],
+          preload: true,
+          display: "swap",
+          selector: "code",
+          fallback: "sans-serif",
+        },
       ]}
     />
     <meta name="viewport" content="width=device-width" />

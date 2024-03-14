@@ -1,0 +1,15 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BaseLayout from "./BaseLayout.astro";
+
+import "../styles/markdown.css";
+const frontmatter = Astro.props
+  .frontmatter as CollectionEntry<"projects">["data"];
+---
+
+<BaseLayout title={frontmatter.name}>
+  <section id="content">
+    <h1 class="mb-5">{frontmatter.name}</h1>
+    <slot />
+  </section>
+</BaseLayout>

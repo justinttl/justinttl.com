@@ -1,5 +1,31 @@
 ---
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+const allProjects = await getCollection("projects");
 ---
 
-<BaseLayout title="Projects"> Coming Soon... </BaseLayout>
+<BaseLayout title="Projects">
+  {
+    allProjects.map((project) => (
+      <div class="mb-10 flex gap-6">
+        <div class="flex flex-[1] items-center justify-center">
+          <Image
+            src={project.data.thumbnail.image}
+            alt={project.data.thumbnail.alt}
+            format="avif"
+            width="200"
+            class="aspect-square rounded-3xl object-cover sm:aspect-video"
+          />
+        </div>
+        <div class="flex-[3]">
+          <h1 class="mt-0 decoration-dotted hover:underline">
+            <a href={`/projects/${project.slug}`}>{project.data.name}</a>
+          </h1>
+          <p>{project.data.description}</p>
+        </div>
+      </div>
+    ))
+  }
+</BaseLayout>

@@ -36,11 +36,28 @@ A barrier is a synchronization primitive where all threads must enter the barrie
 Barriers are important in programs that need to synchronize stages of computation among threads.
 For example, if multiple threads are parallelizing a discrete time simulation, you might want to ensure the state of the world in the previous time step is fully computed before you simulate the current time step.
 
+## Shared Memory Spin Barriers
+
+Spin barriers fall into one category of barriers that relies on busy spinning on shared memory location as a means of communicating between different threads.
+
+The memory locations often hold shared booleans like `release` or `sense`.
+Waiting threads enter a hot loop like `while(!release);` or `while(sense != localsense)` to continuous check when it can leave the barrier.
+
+Spin barriers requires no involvement from the operating system but has the potential to starve the CPU from doing useful work on the thread that has to reach the barrier.
+An alternative is to use locks or barriers that involves the OS scheduler so the waiting thread can go to sleep.
+
+The conventional wisdom is that one should use a spin lock/barrier if the overhead of invoking the operating system is higher than the expected wait time for the lock/barrier.
+But this is a hotly debated topic in the community.
+
+- Linus Torvalds's [take](https://www.realworldtech.com/forum/?threadid=189711&curpostid=189723) on spinlocks in user space programs.
+
+- [Post](https://matklad.github.io/2020/01/02/spinlocks-considered-harmful) by matlad on rust mutex and a practical comparison between spinning vs using standard library mutex.
+
+
 ### Counting Barrier
 
-Counting barrier is a simple implementation that relies on multiple threads busy spinning on a shared memory location.
-Busy spinning refers to a hot loop that continuously check on a condition in an infinite while loop.
-The last thread to enter a barrier signals to all other threads by changing the shared memory.
+Counting barrier is a simple implementation that relies on a single atomic counter variable and multiple threads busy spinning on a release variable.
+The last thread to enter a barrier signals to all other threads by flipping the `release` or `sense` boolean.
 
 **Advantages**: Simple, fewest assembly instructions.
 
@@ -116,7 +133,7 @@ Often times, asymptotic behavior is not the only consideration. Constant factor 
 
 ## MPI Barriers
 
-To synchronize across machines, we must leverage a different mechanism of communication as shared memory and atomic operations are no longer possible.
+To synchronize across machines, we must leverage a different mechanism of communication as shared memory and atomic operations are no longer possible between separate computers on the network.
 
 [MPI](https://www.open-mpi.org/) is an API for expressing explicit network communication between compute nodes.
 It is often used in scientific computing applications that run on many independent nodes of a supercomputing cluster.
@@ -141,3 +158,15 @@ The tournament barrier is actually **twice** as slow as the dissemination barrie
   width="700"
   class="m-auto mb-4 mt-4"
 />
+
+It is worth noting however that the tournament barrier is more efficient in the total amount of communication required despite requiring more rounds of serial communication.
+So there is an interesting tradeoff here between **latency** and **bandwidth**.
+The right solution would depend on the infrastructure the code is running on and the capabilities of the network topology!
+
+## Reflections
+
+I really enjoyed this project.
+The algorithms are incredibly elegant and programming them in C was quite enjoyable.
+
+This was also the first time I gained first hand experience with optimizing multi-threaded performance by eliminating [false sharing](https://en.wikipedia.org/wiki/False_sharing) situations.
+I was able to squeeze substantial performance out of the barriers by properly aligning memory allocation with cache line and padding structures appropriately such that each thread fully "owns" a L1 cache line.

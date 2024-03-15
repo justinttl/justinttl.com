@@ -41,11 +41,7 @@ For example, if multiple threads are parallelizing a discrete time simulation, y
 Spin barriers fall into one category of barriers that relies on busy spinning on shared memory location as a means of communicating between different threads.
 
 The memory locations often hold shared booleans like `release` or `sense`.
-<<<<<<< Updated upstream
-Waiting threads enter a hot loop like `while(!release);` or `while(sense != localsense)` to continuous check when it can leave the barrier.
-=======
-Waiting threads enter a hot loop like `while(!release);` or `while(sense != localsense)` to continuous check when they can leave the barrier.
->>>>>>> Stashed changes
+Waiting threads enter a hot loop like `while(!release);` or `while(sense != localsense)` to continuously check when they can leave the barrier.
 
 Spin barriers requires no involvement from the operating system but has the potential to starve the CPU from doing useful work on the thread that has to reach the barrier.
 An alternative is to use locks or barriers that involves the OS scheduler so the waiting thread can go to sleep.

@@ -5,7 +5,9 @@ thumbnail:
   image: "../../assets/covers/deep3d-cover.png"
   alt: "A 3D movie frame"
 ---
+
 import { Image } from "astro:assets";
+
 import vggImg from "../../assets/images/deep3d/vgg.png";
 import deep3DImg from "../../assets/images/deep3d/architecture.png";
 import parallaxImg from "../../assets/images/deep3d/parallax.png";
@@ -32,7 +34,7 @@ Can we generate 3D footage from 2D frames?
 
 3D perspective is all about depth, and the visual difference of an object's position between our left and right eye (parallax) is what our brains perceive as depth.
 
-<Image src={parallaxImg} alt="parallax" width="300" class="m-auto mt-4 mb-4" />
+<Image src={parallaxImg} alt="parallax" width="400" class="m-auto mb-4 mt-4" />
 
 Deep3D aims to **predict** the right eye perspective using the left eye perspective as input. It does that by predicting depth of objects in an image and **shifting** image pixels accordingly and **in-painting** missing regions by smearing nearby pixels.
 
@@ -57,22 +59,23 @@ This involved implementing sourcing scripts for curating 3D movie frames, and cu
 
 ## Architecture
 
-
-<Image src={vggImg} alt="VGG network" width="500" class="m-auto mt-4 mb-4" />
+<Image src={vggImg} alt="VGG network" width="500" class="m-auto mb-4 mt-4" />
 <p class="text-center">(VGG Architecture - <a href="https://arxiv.org/abs/1409.1556v6">Source</a>)</p>
 
-
 Deep3D builds upon a well known classification network, VGG, and introduces two additional components.
+
 - up-sampling "de-convolution" branches to predict disparity (depth) in the input image
 - a probabilistic selection layer that shifts and in-paints the output image
 
-<Image src={deep3DImg} alt="Deep3D network" width="500" class="m-auto mt-4 mb-4" />
-<p class="text-center">(Deep3D Selection Layer)</p>
+<Image
+  src={deep3DImg}
+  alt="Deep3D network"
+  width="500"
+  class="m-auto mb-4 mt-4"
+/>
+<p class="text-center">(Deep3D Architecture)</p>
 
 ### Disparity Prediction
-
-
-<Image src={deconvolutionImg} alt="Selection layer" width="600" class="m-auto mt-4 mb-4" />
 
 A CNN at each convolution layer typically averages regions of activation to gradually reduce the data dimensions.
 
@@ -80,9 +83,17 @@ For depth estimation, the goal is generate a depth map of each pixel on the imag
 
 To achieve this, the paper proposes a series of branches at each convolution layer that effectively does the opposite of a convolution to up-sample an intermediate representation back to the original dimensions of the input image.
 
+<Image
+  src={deconvolutionImg}
+  alt="Selection layer"
+  width="500"
+  class="m-auto mb-4 mt-4"
+/>
+
 The idea is that these branches will leverage the powerful semantic understanding of the VGG network and learn the appropriate weights to output a representation of depth, which then can be fed to the selection layer.
 
 ### Selection Layer
+
 The selection layer takes in a `3 * Height * Width * 16` tensor, representing where each pixel might be as a normalized probability within 16 distinct levels of depth for the original image with its 3 color channels.
 
 The product of the input and a stack of shifted views can then be reduced along the last dimension to effective compose a parallax image.
@@ -126,9 +137,17 @@ def select(masks, left_image, left_shift=16, name="select"):
 
 ```
 
-<Image src={selectionImg} alt="Selection layer" width="400" class="m-auto mt-4 mb-4" />
+<Image
+  src={selectionImg}
+  alt="Selection layer"
+  width="400"
+  class="m-auto mb-4 mt-4"
+/>
 
-<p class="text-center">([Tensorboard](https://www.tensorflow.org/tensorboard) renders a nice visualization of this custom layer)</p>
+<p class="text-center">
+  ([Tensorboard](https://www.tensorflow.org/tensorboard) renders a nice
+  visualization of this custom layer)
+</p>
 
 ## Training and Results
 
@@ -140,14 +159,34 @@ Training only for 30 hours on a laptop (which did have a discrete GPU), the mode
 
 Here are some of the results.
 
-<Image src={horseImg} alt="gif of parallax effect on horse rider " width="500" class="m-auto mt-4 mb-4" />
+<Image
+  src={horseImg}
+  alt="gif of parallax effect on horse rider "
+  width="500"
+  class="m-auto mb-4 mt-4"
+/>
 
-<Image src={horseDepthImg} alt="gif of parallax effect on horse rider " width="500" class="m-auto mt-4 mb-4" />
+<Image
+  src={horseDepthImg}
+  alt="gif of parallax effect on horse rider "
+  width="500"
+  class="m-auto mb-4 mt-4"
+/>
 <p class="text-center">(Estimated depth visualized)</p>
 
-<Image src={hobbitImg} alt="gif of parallax effect on horse rider " width="500" class="m-auto mt-4 mb-4" />
+<Image
+  src={hobbitImg}
+  alt="gif of parallax effect on horse rider "
+  width="500"
+  class="m-auto mb-4 mt-4"
+/>
 
-<Image src={dancerImg} alt="gif of parallax effect on horse rider " width="500" class="m-auto mt-4 mb-4" />
+<Image
+  src={dancerImg}
+  alt="gif of parallax effect on horse rider "
+  width="500"
+  class="m-auto mb-4 mt-4"
+/>
 
 ## Reflections
 

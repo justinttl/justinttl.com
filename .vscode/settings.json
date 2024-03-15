@@ -1,3 +1,10 @@
 {
+<<<<<<< Updated upstream
   "cSpell.words": ["deconvolution"]
+=======
+  "cSpell.words": [
+    "deconvolution",
+    "spinlocks"
+]
+>>>>>>> Stashed changes
 }

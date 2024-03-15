@@ -34,7 +34,7 @@ Can we generate 3D footage from 2D frames?
 
 3D perspective is all about depth, and the visual difference of an object's position between our left and right eye (parallax) is what our brains perceive as depth.
 
-<Image src={parallaxImg} alt="parallax" width="300" class="m-auto mb-4 mt-4" />
+<Image src={parallaxImg} alt="parallax" width="400" class="m-auto mb-4 mt-4" />
 
 Deep3D aims to **predict** the right eye perspective using the left eye perspective as input. It does that by predicting depth of objects in an image and **shifting** image pixels accordingly and **in-painting** missing regions by smearing nearby pixels.
 
@@ -60,9 +60,7 @@ This involved implementing sourcing scripts for curating 3D movie frames, and cu
 ## Architecture
 
 <Image src={vggImg} alt="VGG network" width="500" class="m-auto mb-4 mt-4" />
-<p class="text-center">
-  (VGG Architecture - <a href="https://arxiv.org/abs/1409.1556v6">Source</a>)
-</p>
+<p class="text-center">(VGG Architecture - <a href="https://arxiv.org/abs/1409.1556v6">Source</a>)</p>
 
 Deep3D builds upon a well known classification network, VGG, and introduces two additional components.
 
@@ -75,22 +73,22 @@ Deep3D builds upon a well known classification network, VGG, and introduces two 
   width="500"
   class="m-auto mb-4 mt-4"
 />
-<p class="text-center">(Deep3D Selection Layer)</p>
+<p class="text-center">(Deep3D Architecture)</p>
 
 ### Disparity Prediction
-
-<Image
-  src={deconvolutionImg}
-  alt="Selection layer"
-  width="600"
-  class="m-auto mb-4 mt-4"
-/>
 
 A CNN at each convolution layer typically averages regions of activation to gradually reduce the data dimensions.
 
 For depth estimation, the goal is generate a depth map of each pixel on the image. Therefore we want to preserve the dimensions of the image.
 
 To achieve this, the paper proposes a series of branches at each convolution layer that effectively does the opposite of a convolution to up-sample an intermediate representation back to the original dimensions of the input image.
+
+<Image
+  src={deconvolutionImg}
+  alt="Selection layer"
+  width="500"
+  class="m-auto mb-4 mt-4"
+/>
 
 The idea is that these branches will leverage the powerful semantic understanding of the VGG network and learn the appropriate weights to output a representation of depth, which then can be fed to the selection layer.
 

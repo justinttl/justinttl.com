@@ -10,6 +10,9 @@ import { Image } from "astro:assets";
 
 import treeImg from "../../assets/images/barriers/tree.png";
 import tree2Img from "../../assets/images/barriers/tree-2.png";
+import ompImg from "../../assets/images/barriers/omp.png";
+import disseminationImg from "../../assets/images/barriers/dissemination.png";
+import mpiImg from "../../assets/images/barriers/mpi.png";
 
 ## Overview
 
@@ -33,7 +36,7 @@ A barrier is a synchronization primitive where all threads must enter the barrie
 Barriers are important in programs that need to synchronize stages of computation among threads.
 For example, if multiple threads are parallelizing a discrete time simulation, you might want to ensure the state of the world in the previous time step is fully computed before you simulate the current time step.
 
-## Counting Barrier
+### Counting Barrier
 
 Counting barrier is a simple implementation that relies on multiple threads busy spinning on a shared memory location.
 Busy spinning refers to a hot loop that continuously check on a condition in an infinite while loop.
@@ -45,7 +48,7 @@ The last thread to enter a barrier signals to all other threads by changing the 
 A [thundering herd](https://en.wikipedia.org/wiki/Thundering_herd_problem) then occurs when the shared location is changed and all threads invalidate their cache row and refetch the updated value from the core who cache line is in the modified state.
 The amount of concurrent bus traffic scales as number of threads increase. This has the potential to stall the CPU and reduces the overall efficiency of the barrier.
 
-## MCS Tree Barrier
+### MCS Tree Barrier
 
 <Image
   src={treeImg}
@@ -65,8 +68,76 @@ MCS proposes a solution that alleviates memory contention by distributing the sp
 
 The tree structure is represented as an array of interconnected nodes. Quite uniquely, the structure encodes both a 4-ary arrival tree and a binary wake up tree all in a single array of node structs.
 
-When threads arrive at the barrier, they signal their arrival to the parent in the arrival tree and waits until the its parent in the wake up tree signals to continue execution.
+When a threads arrives at the barrier, it first spins until all of its children have arrived. Then it signals to its parent in the arrival tree. Then, it spins until the parent in the wake up tree signals to continue execution. Finally, it signal its children to continue and leaves the barrier.
 
 **Advantages**: Avoids single spin location for all threads.
 
 **Disadvantages**: Code is more complex.
+
+### Which one is better?
+
+Like most engineering decisions, it somewhat depends!
+
+Using OpenMP to spin up multiple threads, we can compare the runtime of the two barriers.
+
+```c
+    #pragma omp parallel shared(num_threads)
+    {
+        struct timespec start, end;
+        clock_gettime(CLOCK_MONOTONIC, &start);
+
+        for (int i = 0; i < 1000000; i++)
+        {
+            barrier();
+        }
+
+        clock_gettime(CLOCK_MONOTONIC, &end);
+
+        printf(
+            "1000000 iterations took about %.5f seconds\n",
+            ((double)end.tv_sec + 1.0e-9 * end.tv_nsec) -
+            ((double)start.tv_sec + 1.0e-9 * start.tv_nsec)
+        );
+    }
+```
+
+<Image
+  src={ompImg}
+  alt="Results of shared memory barriers"
+  width="700"
+  class="m-auto mb-4 mt-4"
+/>
+
+The graph above shows the average latency per iteration of the barrier.
+
+As expected, the MSC tree barrier scaled better with the number of threads due to less contention on the bus.
+However, the counting barrier outperforms the tree barrier at low number of threads due to the simpler code.
+Often times, asymptotic behavior is not the only consideration. Constant factor and problem size matter!
+
+## MPI Barriers
+
+To synchronize across machines, we must leverage a different mechanism of communication as shared memory and atomic operations are no longer possible.
+
+[MPI](https://www.open-mpi.org/) is an API for expressing explicit network communication between compute nodes.
+It is often used in scientific computing applications that run on many independent nodes of a supercomputing cluster.
+
+For the project, I have implemented a **tournament barrier** and a **dissemination barrier** using `OpenMPI`.
+
+Both of these algorithms does `O(log(N))` rounds of coordinated communication between nodes to reach consensus that everyone has reached the barrier.
+
+<Image
+  src={disseminationImg}
+  alt="Dissemination Barrier"
+  width="700"
+  class="m-auto mb-4 mt-4"
+/>
+
+But like the shared memory barriers, Big O behavior does not tell the full story.
+The tournament barrier is actually **twice** as slow as the dissemination barrier due to a constant factor difference in the number of serial communication rounds required.
+
+<Image
+  src={mpiImg}
+  alt="Dissemination Barrier"
+  width="700"
+  class="m-auto mb-4 mt-4"
+/>

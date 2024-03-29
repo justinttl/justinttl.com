@@ -9,10 +9,10 @@ const frontmatter = Astro.props.frontmatter as CollectionEntry<"posts">["data"];
 ---
 
 <BaseLayout title={frontmatter.title}>
-  <p class="text-lg text-gray-600">
+  <div class="text-lg text-cGray">
     {frontmatter.pubDate.toDateString().slice(4)}
-  </p>
-  <h1>{frontmatter.title}</h1>
+  </div>
+  <h1 class="mt-4">{frontmatter.title}</h1>
   {
     frontmatter.cover && (
       <div>

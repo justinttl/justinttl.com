@@ -18,11 +18,13 @@ import mpiImg from "../../assets/images/barriers/mpi.png";
 
 Coordinating the execution of multiple threads often requires efficient implementation of synchronization primitives from the standard library and/or operating system.
 
-As an operating system and library designer, how can we implement primitives like locks, mutex and barriers to scale efficiently on many threads?
+As an operating system and library designer,
 
-How can we minimize latency and memory contention?
+- How can we implement primitives like locks, mutex and barriers to scale efficiently on many threads?
 
-Can we also synchronize separate processes, possibly across independent machines?
+- How can we minimize latency and memory contention?
+
+- Can we synchronize separate processes, possibly across independent machines?
 
 These are the questions I tried to answer in a project I completed in [Advanced Operating Systems](https://omscs.gatech.edu/cs-6210-advanced-operating-systems) at Georgia Tech where I implemented and compared various barrier algorithms discussed in the seminal paper,
 

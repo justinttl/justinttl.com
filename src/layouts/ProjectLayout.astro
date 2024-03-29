@@ -8,8 +8,6 @@ const frontmatter = Astro.props
 ---
 
 <BaseLayout title={frontmatter.name}>
-  <section id="content">
-    <h1 class="mb-5">{frontmatter.name}</h1>
-    <slot />
-  </section>
+  <h1 class="mb-5">{frontmatter.name}</h1>
+  <slot />
 </BaseLayout>

@@ -1,27 +1,29 @@
 h1 {
   color: theme("colors.cMaroon");
-  margin: 1rem 0;
-  font-size: 2rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  font-size: 2.2rem;
   font-weight: 300;
 }
 
 h2 {
   color: theme("colors.cMaroon");
-  margin-top: 2rem;
+  margin-top: 2.5rem;
   margin-bottom: 1rem;
-  font-size: 1.7rem;
+  font-size: 1.8rem;
   font-weight: 300;
 }
 
 h3 {
   color: theme("colors.cMaroon");
-  margin: 1rem 0;
-  font-size: 1.3rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
   font-weight: 300;
 }
 
 blockquote {
-  margin: 1rem 0;
+  margin: 2rem 0;
   margin-left: 1em;
   border-left: 2px theme("colors.cMaroon") solid;
 }
@@ -31,11 +33,11 @@ blockquote > p {
 }
 
 p {
-  margin-top: 0.7rem;
-  margin-bottom: 0.7rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
-a {
+#content a {
   color: theme("colors.cMaroon");
 }
 
@@ -52,7 +54,7 @@ p > code {
   background: #e0e0e0;
   font-family: "MesloLGS-NF", monospace;
   direction: ltr;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 pre {
@@ -66,7 +68,7 @@ pre > code {
   /* background: #343434; */
   font-family: "MesloLGS-NF", monospace;
   display: block;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5;
   word-break: normal;
   white-space: pre;

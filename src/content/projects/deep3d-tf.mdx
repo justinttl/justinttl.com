@@ -60,11 +60,8 @@ This involved implementing sourcing scripts for curating 3D movie frames, and cu
 ## Architecture
 
 <Image src={vggImg} alt="VGG network" width="500" class="m-auto mb-4 mt-4" />
-<p class="text-center">
-  (VGG Architecture - <a href="https://arxiv.org/abs/1409.1556v6">Source</a>)
-</p>
 
-Deep3D builds upon a well known classification network, VGG, and introduces two additional components.
+Deep3D builds upon a well known classification network, [VGG](https://arxiv.org/abs/1409.1556v6), and introduces two additional components.
 
 - up-sampling "de-convolution" branches to predict disparity (depth) in the input image
 - a probabilistic selection layer that shifts and in-paints the output image
@@ -148,7 +145,6 @@ nice visualization of it.
   width="400"
   class="m-auto mb-4 mt-4"
 />
-
 
 ## Training and Results
 

@@ -12,27 +12,31 @@ body {
   width: 100%;
   max-width: 80ch;
   padding: 1rem;
-  line-height: 1.5rem;
+  line-height: 1.6rem;
+  font-size: 1.1rem;
   color: theme("colors.cGray");
 }
 
 h1 {
   color: theme("colors.cMaroon");
-  margin: 1rem 0;
-  font-size: 2rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  font-size: 2.2rem;
   font-weight: 300;
 }
 
 h2 {
   color: theme("colors.cMaroon");
-  margin: 1rem 0;
-  font-size: 1.7rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
   font-weight: 300;
 }
 
 h3 {
   color: theme("colors.cMaroon");
-  margin: 1rem 0;
-  font-size: 1.3rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
   font-weight: 300;
 }

@@ -69,8 +69,10 @@ const { title } = Astro.props;
     <title>{`Justin | ${title}`}</title>
   </head>
   <Header />
-  <body>
+  <section id="content">
     <slot />
-  </body>
+  </section>
   <Footer />
+
+
 </html>
